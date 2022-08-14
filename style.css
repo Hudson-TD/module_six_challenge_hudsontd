@@ -1,0 +1,76 @@
+* {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+#parentContainerOne {
+    margin-bottom: .75rem;
+}
+
+#parentContainerTwo {
+    margin-bottom: .75rem;
+}
+
+#mainTitle {
+    color:white;
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: .75rem;
+}
+#searchCityHeader {
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+#recentSearchesHeader {
+    text-align: center;
+    font-size: 1rem;
+    text-decoration: underline;
+    margin-bottom: .5rem;
+}
+
+#weatherTodayHeader, #fiveDayForecastHeader {
+    font-size: 1rem;
+}
+
+#weatherToday p{
+    display: inline-block;
+    margin-right: 9rem;
+    padding: .5rem;
+}
+
+form {
+    text-align: center;
+    padding: .45rem;
+    margin-bottom: 1rem; 
+}
+
+input {
+    border: 1px solid black;
+    width: 11rem;
+    border-radius: .5rem;
+}
+
+#searchSubmit {
+    font-weight: 500;
+    border: 2px solid black;
+}
+
+#fiveDayForecastHeader {
+    margin-bottom: 1.5rem; 
+}
+
+#uvValue {
+    background-color: rgb(173, 226, 166);
+}
+
+.uvValueModerate {
+    background-color: rgb(226, 205, 166);
+}
+
+.uvValueHigh {
+    background-color: rgb(206, 145, 89);
+}
+
+.uvValueExtreme {
+    background-color: rgb(224, 114, 114);
+}
