@@ -1,7 +1,6 @@
 * {
     font-family: 'JetBrains Mono', monospace;
 }
-
 #parentContainerOne {
     margin-bottom: .75rem;
 }
@@ -18,7 +17,8 @@
 }
 #searchCityHeader {
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    text-decoration: underline;
 }
 
 #recentSearchesHeader {
@@ -41,7 +41,8 @@
 form {
     text-align: center;
     padding: .45rem;
-    margin-bottom: 1rem; 
+    border: 2px solid black;
+    border-radius: .5rem;
 }
 
 input {
@@ -54,6 +55,10 @@ input {
     font-weight: 500;
     border: 2px solid black;
 }
+.cityBtn {
+    border: 2px solid black;
+    border-radius: .5rem;
+}
 
 #fiveDayForecastHeader {
     margin-bottom: 1.5rem; 
@@ -61,16 +66,54 @@ input {
 
 #uvValue {
     background-color: rgb(173, 226, 166);
+    border: 2px solid black;
+    border-radius: .5rem;
 }
 
 .uvValueModerate {
     background-color: rgb(226, 205, 166);
+    border: 2px solid black;
+    border-radius: .5rem;
 }
 
 .uvValueHigh {
     background-color: rgb(206, 145, 89);
+    border: 2px solid black;
+    border-radius: .5rem;
 }
 
 .uvValueExtreme {
     background-color: rgb(224, 114, 114);
+    border: 2px solid black;
+    border-radius: .5rem;
+}
+
+@media only screen and (max-width: 800px) {
+    #mainTitle {
+        font-size: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    #weatherToday p{
+        margin: 0;
+    }
+    section {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+    }
+    h2 p{
+        text-align: center;
+    }
+    form {
+        border: hidden;
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
 }

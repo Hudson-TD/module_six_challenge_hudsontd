@@ -1,7 +1,9 @@
 // Declaring global variables //
 var cityList = [];
+var recentlySearched = [];
 var APIKey = "8c933dc3854df7652847236dd545f2b4";
 var currentDay = moment().format("MM-DD-YYYY");
+// Using moment for 5 day forecast date values instead of the API call so they all format the same //
 var ForecastDayOne = moment().add(1,'days').format("MM-DD-YYYY");
 var ForecastDayTwo = moment().add(2,'days').format("MM-DD-YYYY");
 var ForecastDayThree = moment().add(3,'days').format("MM-DD-YYYY");
@@ -14,15 +16,15 @@ var currentLong;
 // Stores cityList in localStorage //
 function storeSearches() {
     localStorage.setItem("cities", JSON.stringify(cityList));
-}
+};
 
 // Adds last searched city to list-group as button for user to select city //
 function createSearchedCityList(){
     $(".grid").empty();
     for (var i = 0; i < cityList.length; i++) {
-        $(".grid").prepend($(`<button class="bg-blue-300 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full"> ${cityList[i]} </button>`));
+        $(".grid").append($(`<button class="bg-blue-300 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full cityBtn"> ${cityList[i]} </button>`));
     }
-}
+};
 
 // Event listener for city search evokes above functions to dynamically display results //
 $("form").on("submit", function(event) {
@@ -34,11 +36,12 @@ $("form").on("submit", function(event) {
     storeSearches();
     createSearchedCityList();
     displayPageElements();
-})
+});
 
 // Main function that dynamically creates and appends all the API data to the HTML with 3 calls //
 function displayPageElements() {
-    var citySearch = cityList[0];
+    // Since we are unshifting to the array every sumbit would be a new city at index 0 //
+    citySearch = cityList[0];
     var queryURL= "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=Imperial" + "&appid=" + APIKey;
     fetch(queryURL)
       .then(function (response) {
@@ -56,8 +59,8 @@ function displayPageElements() {
             </div>`
         )
         $("#weatherToday").append(`<p>Temperature: ${data.main.temp} &degF</p>`);
-        $("#weatherToday").append(`<p>Humidity: ${data.main.humidity} %</p>`);
         $("#weatherToday").append(`<p>Wind: ${data.wind.speed} mph</p>`);
+        $("#weatherToday").append(`<p>Humidity: ${data.main.humidity} %</p>`);
 
         // Query to obtain and append UV Index data to today's forecast //
         var queryUVI = "https://api.openweathermap.org/data/3.0/onecall?" + "lat=" + currentLat + "&lon=" + currentLong + "&exclude=hourly,daily" + "&appid=" + APIKey;
@@ -94,6 +97,7 @@ function displayPageElements() {
             $("#forecastDate3").empty();
             $("#forecastDate4").empty();
             $("#forecastDate5").empty();
+            // Chosen list array value for each day correlates with 12:00pm //
             // Appending forecast data for day 1/5 //
             $("#forecastDate1").append(`<p>${ForecastDayOne}</p>`);
             $("#forecastDate1").append(`<div class="container"><img src="https://openweathermap.org/img/w/${data.list[5].weather[0].icon}.png"></div>`);
@@ -125,7 +129,5 @@ function displayPageElements() {
             $("#forecastDate5").append(`<p>Wind: ${data.list[37].wind.speed} mph</p>`);
             $("#forecastDate5").append(`<p>Humidity: ${data.list[37].main.humidity} %</p>`);
         })
-      })
-
-
+      });
   };
