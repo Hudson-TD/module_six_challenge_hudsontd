@@ -12,7 +12,7 @@ var ForecastDayFive = moment().add(5,'days').format("MM-DD-YYYY");
 
 var currentLat;
 var currentLong;
-
+var citySearch;
 // Stores cityList in localStorage //
 function storeSearches() {
     localStorage.setItem("cities", JSON.stringify(cityList));
@@ -22,7 +22,7 @@ function storeSearches() {
 function createSearchedCityList(){
     $(".grid").empty();
     for (var i = 0; i < cityList.length; i++) {
-        $(".grid").append($(`<button class="bg-blue-300 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full cityBtn"> ${cityList[i]} </button>`));
+        $(".grid").append($(`<button class=" cityBtn bg-blue-300 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full"> ${cityList[i]} </button>`).attr("id", i));
     }
 };
 
@@ -39,9 +39,13 @@ $("form").on("submit", function(event) {
 });
 
 // Main function that dynamically creates and appends all the API data to the HTML with 3 calls //
-function displayPageElements() {
+function displayPageElements(cityParam) {
     // Since we are unshifting to the array every sumbit would be a new city at index 0 //
-    citySearch = cityList[0];
+    if(cityParam) {
+        citySearch = cityParam;
+    } else {
+        citySearch = cityList[0];
+    }
     var queryURL= "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=Imperial" + "&appid=" + APIKey;
     fetch(queryURL)
       .then(function (response) {
@@ -51,19 +55,20 @@ function displayPageElements() {
         console.log(data);
         currentLat = data.coord.lat;
         currentLong = data.coord.lon;
+        $("#weatherToday").empty();
         $("#weatherToday").append(
             `<div class="container" id="currentDayForecast>
-                <h3 class="">${cityList[0]}</h3>
+                <h3 class="">${citySearch}</h3>
                 <h3 class="">${currentDay}</h3>
                 <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png">
+                <p>Temperature: ${data.main.temp} &degF</p>
+                <p>Wind: ${data.wind.speed} mph</p>
+                <p>Humidity: ${data.main.humidity} %</p>
             </div>`
-        )
-        $("#weatherToday").append(`<p>Temperature: ${data.main.temp} &degF</p>`);
-        $("#weatherToday").append(`<p>Wind: ${data.wind.speed} mph</p>`);
-        $("#weatherToday").append(`<p>Humidity: ${data.main.humidity} %</p>`);
+        );
 
         // Query to obtain and append UV Index data to today's forecast //
-        var queryUVI = "https://api.openweathermap.org/data/3.0/onecall?" + "lat=" + currentLat + "&lon=" + currentLong + "&exclude=hourly,daily" + "&appid=" + APIKey;
+        var queryUVI = "https://api.openweathermap.org/data/2.5/onecall?" + "lat=" + currentLat + "&lon=" + currentLong + "&exclude=hourly,daily" + "&appid=" + APIKey;
         fetch(queryUVI)
         .then(function (response) {
           return response.json();
@@ -130,4 +135,49 @@ function displayPageElements() {
             $("#forecastDate5").append(`<p>Humidity: ${data.list[37].main.humidity} %</p>`);
         })
       });
+    
+    // Event listeners for recently searched cities //
+    $("#0").on("click", function(event) {
+        event.preventDefault();
+        console.log("Button pressed!");
+        cityParam = cityList[0]
+        displayPageElements(cityParam);
+    });
+
+    $("#1").on("click", function(event) {
+        $("#currentDayForecast").empty();
+        event.preventDefault();
+        cityParam = cityList[1]
+        displayPageElements(cityParam);
+    });
+
+    $("#2").on("click", function(event) {
+        $("#currentDayForecast").empty();
+        event.preventDefault();
+        console.log("Button pressed!");
+        cityParam = cityList[2]
+        displayPageElements(cityParam);
+    });
+
+    $("#3").on("click", function(event) {
+        event.preventDefault();
+        console.log("Button pressed!");
+        cityParam = cityList[3]
+        displayPageElements(cityParam);
+    });
+
+    $("#4").on("click", function(event) {
+        $("#currentDayForecast").empty();
+        event.preventDefault();
+        cityParam = cityList[4]
+        displayPageElements(cityParam);
+    });
+
+    $("#5").on("click", function(event) {
+        $("#currentDayForecast").empty();
+        event.preventDefault();
+        console.log("Button pressed!");
+        cityParam = cityList[5]
+        displayPageElements(cityParam);
+    });
   };
